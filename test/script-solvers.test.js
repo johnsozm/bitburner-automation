@@ -82,3 +82,13 @@ describe("Test Spiralize Matrix solver function", () => {
         assert.deepEqual(solver.spiralize_matrix([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]), [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]);
     });
 });
+
+describe("Test Algorithmic Stock Trader I solver function", () => {
+    it("Should return 0 if no profit can be made", () => {
+        assert.equal(solver.stock_trader_1([9, 8, 7, 6, 5]), 0);
+    });
+    it("Should return the maximum profit possible if any can be made", () => {
+        assert.equal(solver.stock_trader_1([122, 39, 76, 41, 99]), 60);
+        assert.equal(solver.stock_trader_1([120, 58, 52, 92, 97, 106, 140]), 88);
+    });
+});

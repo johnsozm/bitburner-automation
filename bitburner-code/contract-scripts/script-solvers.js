@@ -309,3 +309,24 @@ export function spiralize_matrix(matrix) {
 
 	return spiralized;
 }
+
+/**
+ * Solver function for Algorithmic Stock Trader I contracts.
+ * 
+ * @param {number[]} prices 
+ * @returns The maximum profit that can be made with a single trade.
+ */
+export function stock_trader_1(prices) {
+	var max_profit = 0;
+
+	for (let i = 0; i < prices.length - 1; i++) {
+		for (let j = i + 1; j < prices.length; j++) {
+			var profit = prices[j] - prices[i];
+			if (profit > max_profit) {
+				max_profit = profit;
+			}
+		}
+	}
+
+	return max_profit;
+}
