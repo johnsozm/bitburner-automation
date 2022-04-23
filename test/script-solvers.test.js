@@ -1,7 +1,7 @@
 import {strict as assert} from "assert";
 import * as solver from "../bitburner-code/contract-scripts/script-solvers.js";
 
-describe("Test Array Jump solver script", () => {
+describe("Test Array Jump solver function", () => {
     it("Should return 0 for untraversable arrays", () => {
         assert.equal(solver.array_jump_shortest_path([0, 1, 2, 3, 4, 5], 0, 0), 0);
         assert.equal(solver.array_jump_shortest_path([1, 2, 0, 0, 0, 4], 0, 0), 0);
@@ -12,7 +12,7 @@ describe("Test Array Jump solver script", () => {
     });
 });
 
-describe("Test Total Ways to Sum II solver script", () => {
+describe("Test Total Ways to Sum II solver function", () => {
     it("Should return 0 if there is no way to reach the given sum", () => {
         assert.equal(solver.count_sums([3, 4, 6], 0, 0, 1), 0);
     })
@@ -22,7 +22,7 @@ describe("Test Total Ways to Sum II solver script", () => {
     });
 });
 
-describe("Test Generate IP Addesses solver script", () => {
+describe("Test Generate IP Addesses solver function", () => {
     it("Should return an empty array if the string cannot be parsed as an IP", () => {
         assert.deepEqual(solver.find_all_ips("", "999999999999", 4), []);
     });
@@ -32,7 +32,7 @@ describe("Test Generate IP Addesses solver script", () => {
     });
 });
 
-describe("Test Largest Prime Factor solver script", () => {
+describe("Test Largest Prime Factor solver function", () => {
     it("Should correctly handle illegal values", () => {
         assert.equal(solver.largest_factor(-12), 1);
         assert.equal(solver.largest_factor(1), 1);
@@ -46,10 +46,18 @@ describe("Test Largest Prime Factor solver script", () => {
     });
 });
 
-describe("Test Subarray with Maximum Sum solver script", () => {
+describe("Test Subarray with Maximum Sum solver function", () => {
     it("Should correctly determine the maximum sum", () => {
         assert.equal(solver.max_subarray_sum([1, 2, 3, 4]), 10);
         assert.equal(solver.max_subarray_sum([-12, -13, -14, -100]), -12);
         assert.equal(solver.max_subarray_sum([1, 8, -5, -6, 8, -4, 8]), 12);
+    });
+});
+
+describe("Test Merge Overlapping Intervals solver function", () => {
+    it("Should correctly sort and merge intervals", () => {
+        assert.deepEqual(solver.merge_intervals([[1, 3], [7, 10], [2, 5]]), [[1, 5], [7, 10]]);
+        assert.deepEqual(solver.merge_intervals([[9, 12], [1, 2]]), [[1, 2], [9, 12]]);
+        assert.deepEqual(solver.merge_intervals([[9, 15], [1, 4], [13, 22], [29, 30], [3, 10], [20, 29]]), [[1, 30]])
     });
 });

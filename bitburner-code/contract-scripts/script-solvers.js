@@ -162,3 +162,33 @@ export function max_subarray_sum(array) {
 
 	return max_sum;
 }
+
+/**
+ * Solver function for Merge Overlapping Intervals contracts.
+ * 
+ * @param {number[][]} intervals 
+ * @returns The non-overlapping set of intervals which covers all passed intervals.
+ */
+export function merge_intervals(intervals) {
+	intervals.sort(([a, _b], [c, _d]) => a-c);
+	
+	var merged = [];
+	var min = intervals[0][0];
+	var max = intervals[0][1];
+	for (let i = 1; i < intervals.length; i++) {
+		//Check if intervals overlap
+		if (intervals[i][0] > max) {
+			merged.push([min, max]);
+			min = intervals[i][0];
+			max = intervals[i][1];
+		}
+		else {
+			if (max < intervals[i][1]) {
+				max = intervals[i][1];
+			}
+		}
+	}	
+	merged.push([min, max]);
+
+	return merged;
+}
