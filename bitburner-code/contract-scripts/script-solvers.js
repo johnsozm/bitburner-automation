@@ -28,3 +28,36 @@ export function array_jump_shortest_path(array, current, steps) {
 		}
 	}
 }
+
+/**
+ * Recursive solver function for Total Ways to Sum II contracts.
+ * Determines the number of ways to sum the given numbers to the target value.
+ * Should be initiated as count_sums(digits, 0, 0, target).
+ * 
+ * @param digits The digits which may be used to make the sum
+ * @param index The current index
+ * @param sum The current sum
+ * @param target The target sum
+ * @returns The total number of ways to sum the given digits to the target
+ */
+export function count_sums(digits, index, sum, target) {
+	if (sum > target) {
+		return 0;
+	}
+	if (sum == target) {
+		return 1;
+	}
+	if (index == digits.length - 1) {
+		if ((target - sum) % digits[digits.length-1] == 0) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+
+	var count = 0;
+	count += count_sums(digits, index, sum + digits[index], target);
+	count += count_sums(digits, index + 1, sum, target);
+	return count;
+}

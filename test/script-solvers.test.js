@@ -1,5 +1,5 @@
 import {strict as assert} from "assert";
-import { array_jump_shortest_path } from "../bitburner-code/contract-scripts/script-solvers.js";
+import { array_jump_shortest_path, count_sums } from "../bitburner-code/contract-scripts/script-solvers.js";
 
 describe("Test Array Jump solver script", () => {
     it("Should return 0 for untraversable arrays", () => {
@@ -11,3 +11,13 @@ describe("Test Array Jump solver script", () => {
         assert.equal(array_jump_shortest_path([3, 0, 1, 4, 5, 0, 0, 0, 0], 0, 0), 3);
     });
 });
+
+describe("Test Total Ways to Sum II solver script", () => {
+    it("Should return 0 if there is no way to reach the given sum", () => {
+        assert.equal(count_sums([3, 4, 6], 0, 0, 1), 0);
+    })
+    it("Should correctly count the ways to sum", () => {
+        assert.equal(count_sums([1, 3, 5, 7], 0, 0, 12), 12);
+        assert.equal(count_sums([1, 2, 4], 0, 0, 8), 9);
+    });
+})
