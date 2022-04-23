@@ -192,3 +192,56 @@ export function merge_intervals(intervals) {
 
 	return merged;
 }
+
+/**
+ * Solver function for Sanitize Parentheses in Expression contracts.
+ * 
+ * @param {string} string 
+ * @returns A list of the longest possible substrings with matching parens
+ */
+export function sanitize_parens(string) {
+	//Helper function to check if a string has matching parens
+	function valid_parens(string) {
+		var counter = 0;
+		for (let i = 0; i < string.length; i++) {
+			if (string[i] == '(') {
+				counter += 1;
+			}
+			if (string[i] == ')') {
+				counter -= 1;
+			}
+			if (counter < 0) {
+				return false;
+			}
+		}
+		return counter == 0;
+	}
+
+	var test_set = new Set();
+	test_set.add(string);
+
+	while (test_set.size > 0) {
+		var next_set = new Set();
+		test_set.forEach((val) => {
+			for (let i = 0; i < val.length; i++) {
+				if (val[i] == '(' || val[i] == ')') {
+					next_set.add(val.substring(0, i) + val.substring(i+1));
+				}
+			}
+		});
+
+		var valid = [];
+		next_set.forEach((val) => {
+			if (valid_parens(val)) {
+				valid.push(val);
+			}
+		});
+
+		if (valid.length != 0) {
+			return valid;
+		}
+		test_set = next_set;
+	}
+
+	return [""];
+}

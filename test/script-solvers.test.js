@@ -61,3 +61,15 @@ describe("Test Merge Overlapping Intervals solver function", () => {
         assert.deepEqual(solver.merge_intervals([[9, 15], [1, 4], [13, 22], [29, 30], [3, 10], [20, 29]]), [[1, 30]])
     });
 });
+
+describe("Test Sanitize Parentheses in Expression solver function", () => {
+    it("Should return an array containing a blank string if no valid expressions are possible", () => {
+        assert.deepEqual(solver.sanitize_parens(")("), [""]);
+    });
+    it("Should return all possible sanitized expressions if any exist", () => {
+        assert.deepEqual(solver.sanitize_parens("()())()"), ["(())()", "()()()"]);
+    });
+    it("Should keep non-paren characters in place", () => {
+        assert.deepEqual(solver.sanitize_parens("(a)())()"), ["(a())()", "(a)()()"]);
+    })
+});
