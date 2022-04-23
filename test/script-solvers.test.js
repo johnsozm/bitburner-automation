@@ -1,5 +1,5 @@
 import {strict as assert} from "assert";
-import { array_jump_shortest_path, count_sums, find_all_ips } from "../bitburner-code/contract-scripts/script-solvers.js";
+import { array_jump_shortest_path, count_sums, find_all_ips, largest_factor } from "../bitburner-code/contract-scripts/script-solvers.js";
 
 describe("Test Array Jump solver script", () => {
     it("Should return 0 for untraversable arrays", () => {
@@ -29,5 +29,19 @@ describe("Test Generate IP Addesses solver script", () => {
     it("Should give a list of IP's if any can be generated", () => {
         assert.deepEqual(find_all_ips("", "1938718066", 4), ["193.87.180.66"]);
         assert.deepEqual(find_all_ips("", "25525511135", 4), ["255.255.11.135", "255.255.111.35"]);
+    });
+});
+
+describe("Test Largest Prime Factor solver script", () => {
+    it("Should correctly handle illegal values", () => {
+        assert.equal(largest_factor(-12), 1);
+        assert.equal(largest_factor(1), 1);
+        assert.equal(largest_factor(3.2), 1);
+    });
+    it("Should correctly factor positive integers", () => {
+        assert.equal(largest_factor(256), 2);
+        assert.equal(largest_factor(48), 3);
+        assert.equal(largest_factor(65535), 257);
+        assert.equal(largest_factor(1248163264), 847937);
     });
 });

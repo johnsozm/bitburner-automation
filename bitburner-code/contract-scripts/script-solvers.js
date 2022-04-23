@@ -99,3 +99,44 @@ export function find_all_ips(ip, digits, remaining) {
 	}
 	return results;
 }
+
+/**
+ * Solver function for Largest Prime Factor contracts.
+ * 
+ * @param {number} num 
+ * @returns The largest prime factor of the given number, or 1 if the number has no prime factors.
+ */
+export function largest_factor(num) {
+	if (num < 2 || Math.floor(num) != num) {
+		return 1;
+	}
+	var n = num;
+	while (n % 2 == 0) {
+		n /= 2;
+	}
+	if (n == 1) {
+		return 2;
+	}
+	while (n % 3 == 0) {
+		n /= 3;
+	}
+	if (n == 1) {
+		return 3;
+	}
+
+	var p = 5;
+	var increment = 2;
+	while (p * p <= n) {
+		while (n % p == 0) {
+			n /= p;
+		}
+		if (n == 1) {
+			return p;
+		}
+
+		p += increment;
+		increment = 6 - increment; //Alternate between incrementing by 2 and 4
+	}
+
+	return n;
+}
