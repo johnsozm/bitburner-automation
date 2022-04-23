@@ -103,3 +103,16 @@ describe("Test Algorithmic Stock Trader II solver function", () => {
         assert.equal(solver.stock_trader_2([120, 58, 52, 98, 97, 106, 140]), 89);
     });
 });
+
+describe("Test Algorithmic Stock Trader III solver function", () => {
+    it("Should return 0 if no profit can be made", () => {
+        assert.equal(solver.stock_trader_3([9, 8, 7, 6, 5]), 0);
+    });
+    it("Should return the maximum profit possible if any can be made", () => {
+        assert.equal(solver.stock_trader_3([122, 39, 76, 41, 99]), 95);
+        assert.equal(solver.stock_trader_3([120, 58, 52, 98, 97, 106, 140]), 89);
+    });
+    it("Should correctly detect when single-step gives more profit", () => {
+        assert.equal(solver.stock_trader_3([120, 58, 52, 92, 97, 106, 140]), 88);
+    });
+});

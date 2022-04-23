@@ -356,3 +356,47 @@ export function stock_trader_2(prices) {
 
 	return max_profit[0];
 }
+
+/**
+ * Solver function for Algorithmic Stock Trader III contracts.
+ * 
+ * @param {number[]} prices 
+ * @returns The maximum profit that can be made using at most 2 trades.
+ */
+export function stock_trader_3(prices) {
+	var gains = [];
+	for (let i = 0; i < prices.length - 1; i++) {
+		var thisGains = [];
+		for (let j = 0; j <= prices.length; j++) {
+			if (j <= i) {
+				thisGains.push(0);
+			}
+			else {
+				thisGains.push(prices[j] - prices[i]);
+			}
+		}
+		gains.push(thisGains);
+	}
+
+	var maxProfit = -Infinity;
+
+	for (let i = 0; i < prices.length - 3; i++) {
+		for (let j = i + 1; j < prices.length - 2; j++) {
+			for (let k = j + 1; k < prices.length - 1; k++) {
+				for (let l = k + 1; l < prices.length; l++) {
+					const profit = gains[i][j] + gains[k][l];
+					if (profit > maxProfit) {
+						maxProfit = profit;
+					}
+				}
+			}
+		}
+	}
+
+	const singleStep = stock_trader_1(prices);
+	if (singleStep > maxProfit) {
+		maxProfit = singleStep;
+	}
+
+	return maxProfit;
+}
