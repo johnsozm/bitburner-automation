@@ -103,7 +103,7 @@ export function find_all_ips(ip, digits, remaining) {
 /**
  * Solver function for Largest Prime Factor contracts.
  * 
- * @param {number} num 
+ * @param {number} num The number to be factored
  * @returns The largest prime factor of the given number, or 1 if the number has no prime factors.
  */
 export function largest_factor(num) {
@@ -144,7 +144,7 @@ export function largest_factor(num) {
 /**
  * Solver function for Subarray with Maximum Sum contracts.
  * 
- * @param {number[]} array 
+ * @param {number[]} array The array to be analyzed
  * @returns The largest sum of any contiguous subarray
  */
 export function max_subarray_sum(array) {
@@ -166,7 +166,7 @@ export function max_subarray_sum(array) {
 /**
  * Solver function for Merge Overlapping Intervals contracts.
  * 
- * @param {number[][]} intervals 
+ * @param {number[][]} intervals The intervals to merge
  * @returns The non-overlapping set of intervals which covers all passed intervals.
  */
 export function merge_intervals(intervals) {
@@ -196,7 +196,7 @@ export function merge_intervals(intervals) {
 /**
  * Solver function for Sanitize Parentheses in Expression contracts.
  * 
- * @param {string} string 
+ * @param {string} string The original expression as a string
  * @returns A list of the longest possible substrings with matching parens
  */
 export function sanitize_parens(string) {
@@ -249,7 +249,7 @@ export function sanitize_parens(string) {
 /**
  * Solver function for Spiralize Matrix contracts.
  * 
- * @param {number[][]} matrix 
+ * @param {number[][]} matrix The matrix to spiralize
  * @returns An array containing the spiralized matrix
  */
 export function spiralize_matrix(matrix) {
@@ -313,7 +313,7 @@ export function spiralize_matrix(matrix) {
 /**
  * Solver function for Algorithmic Stock Trader I contracts.
  * 
- * @param {number[]} prices 
+ * @param {number[]} prices The prices to analyze
  * @returns The maximum profit that can be made with a single trade.
  */
 export function stock_trader_1(prices) {
@@ -334,7 +334,7 @@ export function stock_trader_1(prices) {
 /**
  * Solver function for Algorithmic Stock Trader II contracts.
  * 
- * @param {number[]} prices 
+ * @param {number[]} prices The prices to analyze
  * @returns The maximum profit that can be made using any number of trades
  */
 export function stock_trader_2(prices) {
@@ -360,7 +360,7 @@ export function stock_trader_2(prices) {
 /**
  * Solver function for Algorithmic Stock Trader III contracts.
  * 
- * @param {number[]} prices 
+ * @param {number[]} prices The prices to analyze
  * @returns The maximum profit that can be made using at most 2 trades.
  */
 export function stock_trader_3(prices) {
