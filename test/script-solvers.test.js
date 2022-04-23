@@ -1,5 +1,5 @@
 import {strict as assert} from "assert";
-import { array_jump_shortest_path, count_sums } from "../bitburner-code/contract-scripts/script-solvers.js";
+import { array_jump_shortest_path, count_sums, find_all_ips } from "../bitburner-code/contract-scripts/script-solvers.js";
 
 describe("Test Array Jump solver script", () => {
     it("Should return 0 for untraversable arrays", () => {
@@ -20,4 +20,14 @@ describe("Test Total Ways to Sum II solver script", () => {
         assert.equal(count_sums([1, 3, 5, 7], 0, 0, 12), 12);
         assert.equal(count_sums([1, 2, 4], 0, 0, 8), 9);
     });
-})
+});
+
+describe("Test Generate IP Addesses solver script", () => {
+    it("Should return an empty array if the string cannot be parsed as an IP", () => {
+        assert.deepEqual(find_all_ips("", "999999999999", 4), []);
+    });
+    it("Should give a list of IP's if any can be generated", () => {
+        assert.deepEqual(find_all_ips("", "1938718066", 4), ["193.87.180.66"]);
+        assert.deepEqual(find_all_ips("", "25525511135", 4), ["255.255.11.135", "255.255.111.35"]);
+    });
+});

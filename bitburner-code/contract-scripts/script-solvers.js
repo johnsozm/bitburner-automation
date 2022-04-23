@@ -61,3 +61,41 @@ export function count_sums(digits, index, sum, target) {
 	count += count_sums(digits, index + 1, sum, target);
 	return count;
 }
+
+/**
+ * Recursive solver function for Generate IP Addresses contracts.
+ * Should be called as find_all_ips("", digits, 4).
+ * 
+ * @param {*} ip The IP accumulator string
+ * @param {*} digits The remaining digits to add to the IP
+ * @param {*} remaining The number of IP digit groups remaining
+ * @returns All IP addresses that can be generated with the given digits
+ */
+export function find_all_ips(ip, digits, remaining) {
+	//Short-circuit if there's too much remaining string to be a valid IP
+	if (digits.length > remaining * 3) {
+		return [];
+	}
+
+	//Base case
+	if (remaining == 1) {
+		var value = parseInt(digits);
+		if (value > 255 || (value != 0 && digits[0] == '0')) {
+			return [];
+		}
+		else {
+			return [ip + digits];
+		}
+	}
+
+	//Recursive case
+	let results = [];
+	for (let offset = 1; offset <= 3; offset++) {
+		var value = parseInt(digits.substring(0, offset));
+		if (value > 255 || (value != 0 && digits[0] == '0')) {
+			break;
+		}
+		results = results.concat(find_all_ips(ip + digits.substring(0, offset) + ".", digits.substring(offset), remaining - 1))
+	}
+	return results;
+}
