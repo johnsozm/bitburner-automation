@@ -330,3 +330,29 @@ export function stock_trader_1(prices) {
 
 	return max_profit;
 }
+
+/**
+ * Solver function for Algorithmic Stock Trader II contracts.
+ * 
+ * @param {number[]} prices 
+ * @returns The maximum profit that can be made using any number of trades
+ */
+export function stock_trader_2(prices) {
+	var max_profit = [];
+	for (let i = 0; i < prices.length; i++) {
+		max_profit.push(0);
+	}
+	max_profit.push(0); //Extra entry for going past sale at last step
+
+	for (let i = prices.length - 2; i >= 0; i--) {
+		max_profit[i] = max_profit[i+1];
+		for (let j = i + 1; j < prices.length; j++) {
+			var test = prices[j] - prices[i] + max_profit[j+1];
+			if (test > max_profit[i]) {
+				max_profit[i] = test;
+			}
+		}
+	}
+
+	return max_profit[0];
+}
