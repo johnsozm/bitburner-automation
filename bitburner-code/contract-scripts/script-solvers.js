@@ -2,9 +2,9 @@
  * Recursive solver function for Array Jump or Array Jump II contracts.
  * Should be initiated as array_jump_shortest_path(array, 0, 0).
  * 
- * @param array The array to be traversed
- * @param current The current location within the array
- * @param steps The number of steps taken so far
+ * @param {number[]} array The array to be traversed
+ * @param {number} current The current location within the array
+ * @param {number} steps The number of steps taken so far
  * @returns The least number of steps required to reach the end of the array, or 0 if it is impossible
  */
 export function array_jump_shortest_path(array, current, steps) {
@@ -34,10 +34,10 @@ export function array_jump_shortest_path(array, current, steps) {
  * Determines the number of ways to sum the given numbers to the target value.
  * Should be initiated as count_sums(digits, 0, 0, target).
  * 
- * @param digits The digits which may be used to make the sum
- * @param index The current index
- * @param sum The current sum
- * @param target The target sum
+ * @param {string} digits The digits which may be used to make the sum
+ * @param {number} index The current index
+ * @param {number} sum The current sum
+ * @param {number} target The target sum
  * @returns The total number of ways to sum the given digits to the target
  */
 export function count_sums(digits, index, sum, target) {
@@ -66,9 +66,9 @@ export function count_sums(digits, index, sum, target) {
  * Recursive solver function for Generate IP Addresses contracts.
  * Should be called as find_all_ips("", digits, 4).
  * 
- * @param {*} ip The IP accumulator string
- * @param {*} digits The remaining digits to add to the IP
- * @param {*} remaining The number of IP digit groups remaining
+ * @param {string} ip The IP accumulator string
+ * @param {string} digits The remaining digits to add to the IP
+ * @param {number} remaining The number of IP digit groups remaining
  * @returns All IP addresses that can be generated with the given digits
  */
 export function find_all_ips(ip, digits, remaining) {

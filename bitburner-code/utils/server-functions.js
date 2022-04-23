@@ -7,7 +7,7 @@ import SINGULARITY from "../CONFIG.js"
 /**
  * Generates a list of all valid server hostnames.
  * 
- * @param ns Netscript object
+ * @param {ns} ns Netscript object
  * @returns All server hostnames, as a string[]
  */
 export function getAllServers(ns) {
@@ -41,8 +41,8 @@ export function getAllServers(ns) {
 /**
  * Gains root access to the target server if possible.
  * 
- * @param ns Netscript object
- * @param hostname Hostname of the target server
+ * @param {ns} ns Netscript object
+ * @param {string} hostname Hostname of the target server
  * @returns True if the server was hacked, false otherwise
  */
 export function rootServer(ns, hostname) {

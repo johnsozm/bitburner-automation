@@ -1,7 +1,7 @@
 /**
  * Prints shortest path from home to the target server (if found).
  * 
- * @param ns Netscript object
+ * @param {ns} ns Netscript object
  */
 export async function main(ns) {
 	if (ns.args.length != 1) {
@@ -15,11 +15,11 @@ export async function main(ns) {
 /**
  * Breadth-first search function which tracks path to target.
  * 
- * @param ns Netscript object
- * @param prev_node Hostname of the previous node traversed
- * @param current_node Hostname of the node being traversed
- * @param path Accumulated string representing traversed path
- * @param target Name of the target server
+ * @param {ns} ns Netscript object
+ * @param {string} prev_node Hostname of the previous node traversed
+ * @param {string} current_node Hostname of the node being traversed
+ * @param {string} path Accumulated string representing traversed path
+ * @param {string} target Name of the target server
  * @returns The path to the target server, or a blank string if it was not found
  */
 function bfs(ns, prev_node, current_node, path, target) {
