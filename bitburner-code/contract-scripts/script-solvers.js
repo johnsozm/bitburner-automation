@@ -245,3 +245,67 @@ export function sanitize_parens(string) {
 
 	return [""];
 }
+
+/**
+ * Solver function for Spiralize Matrix contracts.
+ * 
+ * @param {number[][]} matrix 
+ * @returns An array containing the spiralized matrix
+ */
+export function spiralize_matrix(matrix) {
+	var min_x = 0;
+	var min_y = 0;
+	var max_x = matrix[0].length - 1;
+	var max_y = matrix.length - 1;
+	var x = 0;
+	var y = 0;
+    var spiralized = [];
+
+	while(min_x <= max_x && min_y <= max_y) {
+        if (min_x > max_x) {
+            break;
+        }
+        while (x <= max_x) {  
+            spiralized.push(matrix[y][x]);
+            x++;
+        }
+        min_y++;
+        y++;
+        x--;
+
+        if (min_y > max_y) {
+            break;
+        }
+        while (y <= max_y) {
+            spiralized.push(matrix[y][x]);
+            y++;
+        }
+        max_x--;
+        y--;
+        x--;
+
+        if (min_x > max_x) {
+            break;
+        }
+        while (x >= min_x) {
+            spiralized.push(matrix[y][x]);
+            x--;
+        }
+        max_y--;
+        x++;
+        y--;
+
+        if (min_y > max_y) {
+            break;
+        }
+        while (y >= min_y) {
+            spiralized.push(matrix[y][x]);
+            y--;
+        }
+        min_x++;
+        x++;
+        y++;
+    }
+
+	return spiralized;
+}

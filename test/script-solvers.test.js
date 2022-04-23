@@ -73,3 +73,12 @@ describe("Test Sanitize Parentheses in Expression solver function", () => {
         assert.deepEqual(solver.sanitize_parens("(a)())()"), ["(a())()", "(a)()()"]);
     })
 });
+
+describe("Test Spiralize Matrix solver function", () => {
+    it("Should correctly spiralize matrices", () => {
+        assert.deepEqual(solver.spiralize_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), [1, 2, 3, 6, 9, 8, 7, 4, 5]);
+    });
+    it("Should correctly handle non-square matrices", () => {
+        assert.deepEqual(solver.spiralize_matrix([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]), [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]);
+    });
+});
