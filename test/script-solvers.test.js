@@ -45,3 +45,11 @@ describe("Test Largest Prime Factor solver script", () => {
         assert.equal(solver.largest_factor(1248163264), 847937);
     });
 });
+
+describe("Test Subarray with Maximum Sum solver script", () => {
+    it("Should correctly determine the maximum sum", () => {
+        assert.equal(solver.max_subarray_sum([1, 2, 3, 4]), 10);
+        assert.equal(solver.max_subarray_sum([-12, -13, -14, -100]), -12);
+        assert.equal(solver.max_subarray_sum([1, 8, -5, -6, 8, -4, 8]), 12);
+    });
+});

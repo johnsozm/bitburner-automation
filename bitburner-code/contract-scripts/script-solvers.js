@@ -140,3 +140,25 @@ export function largest_factor(num) {
 
 	return n;
 }
+
+/**
+ * Solver function for Subarray with Maximum Sum contracts.
+ * 
+ * @param {number[]} array 
+ * @returns The largest sum of any contiguous subarray
+ */
+export function max_subarray_sum(array) {
+	var max_sum = -Infinity;
+
+	for (let min = 0; min < array.length; min++) {
+		var sum = 0;
+		for (let max = min; max < array.length; max++) {
+			sum += array[max];
+			if (sum > max_sum) {
+				max_sum = sum;
+			}
+		}
+	}
+
+	return max_sum;
+}
