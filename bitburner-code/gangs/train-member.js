@@ -41,7 +41,7 @@ export async function main(ns) {
         const chaAscend = ascensionResults == null ? false : ascensionResults.cha >= 1.5 * stats.cha_asc_mult;
 
         if (hackDone && combatDone && chaDone) {
-            ns.gang.setMemberTask(member, "Unassigned");
+            ns.gang.setMemberTask(member, "Territory Warfare");
             break;
         }
         else if (!hackDone  && !hackAscend) {
