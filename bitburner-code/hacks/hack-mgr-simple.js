@@ -27,7 +27,7 @@ export async function main(ns) {
 
             anyNodesLeft = true;
             if (rootServer(ns, servers[i])) {
-                if (ns.getServerMaxMoney(servers[i]) > 0) {
+                if (ns.getServerMaxMoney(servers[i]) > 0 && hackingLevel >= ns.getServerRequiredHackingLevel(servers[i])) {
                     if (ns.run(hackScript, threads, servers[i]) == 0) {
                         ns.tprint("Ran out of RAM while trying to hack " + servers[i] + " on " + ns.getHostname());
                     }
