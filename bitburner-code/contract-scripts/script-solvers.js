@@ -460,3 +460,27 @@ export function unique_paths_1(rows, columns) {
 
 	return paths;
 }
+
+/**
+ * Recursive solver function for Unique Paths in a Grid II.
+ * Should be called as unique_paths_2(grid, 0, 0).
+ * 
+ * @param {number[][]} grid The grid to be traversed (0 = passable, 1 = impassable)
+ * @param {number} x The current x coordinate
+ * @param {number} y The current y coordinate
+ * @returns The number of unique paths from (x, y) to the bottom right
+ */
+export function unique_paths_2(grid, x, y) {
+	if (y == grid.length - 1 && x == grid[0].length - 1) {
+		return 1;
+	}
+
+	var paths = 0;
+	if (y < grid.length - 1 && grid[y+1][x] == 0) {
+		paths += unique_paths_2(grid, x, y+1);
+	}
+	if (x < grid[0].length - 1 && grid[y][x+1] == 0) {
+		paths += unique_paths_2(grid, x+1, y);
+	}
+	return paths;
+}

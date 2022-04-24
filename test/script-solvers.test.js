@@ -132,3 +132,12 @@ describe("Test Unique Paths in a Grid solver function", () => {
         assert.equal(solver.unique_paths_1(16, 12), 7726160)
     });
 });
+
+describe("Test Unique Paths in a Grid II solver function", () => {
+    it("Should return 0 for an impassable grid", () => {
+        assert.equal(solver.unique_paths_2([[0, 1], [1, 0]], 0, 0), 0);
+    });
+    it("Should count all the possible paths for a passable grid", () => {
+        assert.equal(solver.unique_paths_2([[0, 0, 0, 1], [0, 1, 0, 1], [0, 0, 0, 0], [1, 1, 0, 0]], 0, 0), 4);
+    });
+});
