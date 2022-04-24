@@ -171,3 +171,14 @@ describe("Test HammingCodes: Integer to encoded Binary solver", () => {
         assert.equal(solver.hammingEncode(21), "1001101011");
     });
 });
+
+describe("Test HammingCodes: Encoded Binary to Integer solver", () => {
+    it("Should correctly decode Hamming codes", () => {
+        assert.equal(solver.hammingDecode("11110000"), "8");
+        assert.equal(solver.hammingDecode("1001101011"), "21");
+    });
+    it("Should detect and correct single-bit errors", () => {
+        assert.equal(solver.hammingDecode("11110100"), "8");
+        assert.equal(solver.hammingDecode("1001100011"), "21");
+    });
+});

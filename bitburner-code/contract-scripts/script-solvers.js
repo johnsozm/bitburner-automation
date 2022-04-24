@@ -635,33 +635,33 @@ export function shortestPath(grid) {
  * @returns A string containing the extended, even-parity encoding of n.
  */
 export function hammingEncode(n) {
-	const n_bits = Array.from(n.toString(2)).map((x) => parseInt(x));
+	const nBits = Array.from(n.toString(2)).map((x) => parseInt(x));
 
-	var bit_string = [0]; //Initialize with overall parity bit
-	var next_power = 1;
-	var bits_index = 0;
-	var parity_bits = [];
+	var bitString = [0]; //Initialize with overall parity bit
+	var nextPower = 1;
+	var bitsIndex = 0;
+	var parityBits = [];
 	var parity = [];
 	
 	//Generate bit string with parity bits set to 0
-	while (bits_index < n_bits.length) {
-		if (bit_string.length == next_power) {
-			bit_string.push(0);
+	while (bitsIndex < nBits.length) {
+		if (bitString.length == nextPower) {
+			bitString.push(0);
 			parity.push(0);
-			parity_bits.push(next_power);
-			next_power <<= 1;
+			parityBits.push(nextPower);
+			nextPower <<= 1;
 		}
 		else {
-			bit_string.push(n_bits[bits_index]);
-			bits_index++;
+			bitString.push(nBits[bitsIndex]);
+			bitsIndex++;
 		}
 	}
 
 	//Calculate parities
-	for (let i = 0; i < bit_string.length; i++) {
-		for (let j = 0; j < parity_bits.length; j++) {
-			if ((i & parity_bits[j]) != 0) {
-				parity[j] ^= bit_string[i];
+	for (let i = 0; i < bitString.length; i++) {
+		for (let j = 0; j < parityBits.length; j++) {
+			if ((i & parityBits[j]) != 0) {
+				parity[j] ^= bitString[i];
 			}
 		}
 	}
@@ -669,21 +669,70 @@ export function hammingEncode(n) {
 	//Fix any odd parity
 	for (let i = 0; i < parity.length; i++) {
 		if (parity[i] == 1) {
-			bit_string[parity_bits[i]] = 1;
+			bitString[parityBits[i]] = 1;
 		}
 	}
 
 	//Calculate overall parity and fix if needed
-	var overall_parity = 0;
-	bit_string.forEach((x) => {overall_parity ^= x});
+	var overallParity = 0;
+	bitString.forEach((x) => {overallParity ^= x});
 
-	if (overall_parity == 1) {
-		bit_string[0] = 1;
+	if (overallParity == 1) {
+		bitString[0] = 1;
 	}
 
 	//Spit out bit string
-	var binary_string = "";
-	bit_string.forEach((x) => {binary_string += x});
+	var binaryString = "";
+	bitString.forEach((x) => {binaryString += x});
 
-	return binary_string;
+	return binaryString;
+}
+
+/**
+ * Solver for HammingCodes: Encoded Binary to Integer contracts.
+ * 
+ * @param {string} bitString The bitstring to decode
+ * @returns The value encoded in the string, as a string
+ */
+export function hammingDecode(bitString) {
+	var bits = Array.from(bitString).map((x) => parseInt(x));
+
+	//Compute parity bits
+	var k = 1;
+	var parityBits = [];
+	var parity = [];
+	while (k < bitString.length) {
+		parityBits.push(k);
+		parity.push(0);
+		k <<= 1;
+	}
+
+	//Compute parities
+	for (let i = 0; i < bits.length; i++) {
+		for (let j = 0; j < parityBits.length; j++) {
+			if ((i & parityBits[j]) != 0) {
+				parity[j] ^= bits[i];
+			}
+		}
+	}
+
+	//Correct incorrect bit, if any
+	var correctionIndex = 0;
+	for (let i = 0; i < parityBits.length; i++) {
+		if (parity[i] != 0) {
+			correctionIndex += parityBits[i];
+		}
+	}
+	if (correctionIndex != 0) {
+		bits[correctionIndex] ^= 1;
+	}
+
+	var data_bits = "";
+	for (let i = 1; i < bits.length; i++) {
+		if (!parityBits.includes(i)) {
+			data_bits += bits[i];
+		}
+	}
+
+	return "" + parseInt(data_bits, 2);
 }
