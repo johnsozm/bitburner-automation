@@ -116,3 +116,12 @@ describe("Test Algorithmic Stock Trader III solver function", () => {
         assert.equal(solver.stock_trader_3([120, 58, 52, 92, 97, 106, 140]), 88);
     });
 });
+
+describe("Test Total Ways to Sum solver function", () => {
+    it("Should correctly compute the partition function", () => {
+        assert.equal(solver.count_sum_partitions(12), 76);
+        assert.equal(solver.count_sum_partitions(1), 0);
+        assert.equal(solver.count_sum_partitions(23), 1254);
+        assert.equal(solver.count_sum_partitions(150), 40853235312);
+    });
+});

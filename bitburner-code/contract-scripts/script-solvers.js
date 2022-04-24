@@ -400,3 +400,43 @@ export function stock_trader_3(prices) {
 
 	return maxProfit;
 }
+
+/**
+ * Solver function for Total Ways to Sum contracts.
+ * 
+ * @param {number} total The number to partition
+ * @returns The number of distinct partitions, excluding n = n
+ */
+ export function count_sum_partitions(total) {
+	var counts = [];
+
+	//Initialize counts - count[i][j] is ways of writing i using largest term j
+	for (let i = 0; i <= total; i++) {
+		var next = [];
+		for (let j = 0; j <= i; j++) {
+			if (j == 1 || i == 0) {
+				next.push(1);
+			}
+			else {
+				next.push(0);
+			}
+		}
+
+		counts.push(next);
+	}
+
+	//Recursively calculate
+	for (let i = 2; i <= total; i++) {
+		for (let j = 2; j <= i; j++) {
+			var difference = i - j;
+			var index = j;
+			if (j > difference) {
+				index = difference;
+			}
+
+			counts[i][j] = counts[i][j-1] + counts[difference][index];
+		}
+	}
+
+	return counts[total][total] - 1;
+}
