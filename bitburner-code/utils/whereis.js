@@ -16,23 +16,23 @@ export async function main(ns) {
  * Breadth-first search function which tracks path to target.
  * 
  * @param {ns} ns Netscript object
- * @param {string} prev_node Hostname of the previous node traversed
- * @param {string} current_node Hostname of the node being traversed
+ * @param {string} prevNode Hostname of the previous node traversed
+ * @param {string} currentNode Hostname of the node being traversed
  * @param {string} path Accumulated string representing traversed path
  * @param {string} target Name of the target server
  * @returns The path to the target server, or a blank string if it was not found
  */
-function bfs(ns, prev_node, current_node, path, target) {
-	if (current_node == target) {
+function bfs(ns, prevNode, currentNode, path, target) {
+	if (currentNode == target) {
 		return path;
 	}
 	else {
-		var visible = ns.scan(current_node);
+		var visible = ns.scan(currentNode);
 		for (let i = 0; i < visible.length; i++) {
-			if (visible[i] == prev_node) {
+			if (visible[i] == prevNode) {
 				continue;
 			}
-			var result = bfs(ns, current_node, visible[i], path + "->" + visible[i], target);
+			var result = bfs(ns, currentNode, visible[i], path + "->" + visible[i], target);
 			if (result != "") {
 				return result;
 			}

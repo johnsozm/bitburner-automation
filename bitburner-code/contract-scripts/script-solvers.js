@@ -727,12 +727,12 @@ export function hammingDecode(bitString) {
 		bits[correctionIndex] ^= 1;
 	}
 
-	var data_bits = "";
+	var dataBits = "";
 	for (let i = 1; i < bits.length; i++) {
 		if (!parityBits.includes(i)) {
-			data_bits += bits[i];
+			dataBits += bits[i];
 		}
 	}
 
-	return "" + parseInt(data_bits, 2);
+	return "" + parseInt(dataBits, 2);
 }

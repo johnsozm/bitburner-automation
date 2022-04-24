@@ -20,9 +20,9 @@ export function getAllServers(ns) {
         var nextToVisit = new Set();
         toVisit.forEach((hostname) => {
             visited.add(hostname);
-            ns.scan(hostname).forEach((visible_host) => {
-                if (!toVisit.has(visible_host) && !visited.has(visible_host)) {
-                    nextToVisit.add(visible_host);
+            ns.scan(hostname).forEach((visibleHost) => {
+                if (!toVisit.has(visibleHost) && !visited.has(visibleHost)) {
+                    nextToVisit.add(visibleHost);
                 }
             });
         });
