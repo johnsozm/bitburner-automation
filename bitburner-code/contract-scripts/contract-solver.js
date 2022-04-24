@@ -23,7 +23,7 @@ export async function main(ns) {
 
     while (true) {
         contracts.forEach((contract) => {
-            if (blacklist.contains(contract.filename)) {
+            if (blacklist.includes(contract.filename)) {
                 return;
             }
 
