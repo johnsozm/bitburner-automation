@@ -155,3 +155,12 @@ describe("Test Minimum Path Sum in a Triangle solver function", () => {
         assert.equal(solver.minTrianglePath([[6], [4, 3], [3, 3, 1], [9, 8, 7, 7], [3, 5, 2, 7, 4], [9, 9, 7, 1, 9, 4], [5, 9, 9, 4, 2, 1, 5], [5, 9, 4 ,6, 3, 8, 2, 7]]), 25);
     });
 });
+
+describe("Test Shortest Path in a Grid solver", () => {
+    it("Should return an empty string if there is no path", () => {
+        assert.equal(solver.shortestPath([[0, 1], [1, 0]]), '');
+    });
+    it("Should return one of the shortest paths", () => {
+        assert.equal(solver.shortestPath([[0,1,0,0,0],[0,0,0,1,0]]), "DRRURRD");
+    });
+});

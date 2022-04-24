@@ -554,3 +554,76 @@ export function minTrianglePath(triangle) {
 
 	return triangle[0][0];
 }
+
+/**
+ * Solver function for Shortest Path in a Grid.
+ * 
+ * @param {number[][]} grid The grid to be traversed.
+ * @returns One of the shortest paths to the bottom right, or a blank string if none exists.
+ */
+export function shortestPath(grid) {
+	var distance = Array.from(Array(grid.length), () => Array(grid[0].length).fill(Infinity));
+	distance[0][0] = 0;
+	var path = Array.from(Array(grid.length), () => Array(grid[0].length).fill(""));;
+	var unvisited = [];
+	for (let i = 0; i < grid.length; i++) {
+		for (let j = 0; j < grid[0].length; j++) {
+			if (grid[i][j] == 0) {
+				unvisited.push([i, j]);
+			}
+		}
+	}
+
+	while (unvisited.length > 0) {
+		var minDistance = Infinity;
+		var minIndex = -1;
+		for (let i = 0; i < unvisited.length; i++) {
+			if (unvisited[i] == null) {
+				continue;
+			}
+			if (distance[unvisited[i][0]][unvisited[i][1]] < minDistance) {
+				minDistance = distance[unvisited[i][0]][unvisited[i][1]];
+				minIndex = i;
+			}
+		}
+	
+		if (minDistance == Infinity || minIndex == -1) {
+			break;
+		}
+
+		const i = unvisited[minIndex][0];
+		const j = unvisited[minIndex][1];
+		unvisited[minIndex] = null;
+
+		if (i == grid.length - 1 && j == grid[0].length - 1) {
+			break;
+		}
+
+		for (let k = 0; k < unvisited.length; k++) {
+			if (unvisited[k] == null) {
+				continue;
+			}
+			const this_i = unvisited[k][0];
+			const this_j = unvisited[k][1];
+
+			if (this_i == i - 1 && this_j == j && distance[this_i][this_j] > minDistance + 1) {
+				distance[this_i][this_j] = minDistance + 1;
+				path[this_i][this_j] = path[i][j] + "U";
+			}
+			if (this_i == i + 1 && this_j == j && distance[this_i][this_j] > minDistance + 1) {
+				distance[this_i][this_j] = minDistance + 1;
+				path[this_i][this_j] = path[i][j] + "D";
+			}
+			if (this_i == i && this_j == j - 1 && distance[this_i][this_j] > minDistance + 1) {
+				distance[this_i][this_j] = minDistance + 1;
+				path[this_i][this_j] = path[i][j] + "L";
+			}
+			if (this_i == i && this_j == j + 1 && distance[this_i][this_j] > minDistance + 1) {
+				distance[this_i][this_j] = minDistance + 1;
+				path[this_i][this_j] = path[i][j] + "R";
+			}
+		}
+	}
+
+	return path[grid.length - 1][grid[0].length - 1];
+}
