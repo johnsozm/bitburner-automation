@@ -49,11 +49,23 @@ export async function main(ns) {
             case "Generate IP Addresses":
                 solution = solver.findAllIPs("", args, 4);
                 break;
+            case "HammingCodes: Integer to encoded Binary":
+                solution = solver.hammingEncode(args);
+                break;
+            case "HammingCodes: Encoded Binary to Integer":
+                solution = solver.hammingDecode(args);
+                break;
             case "Merge Overlapping Intervals":
                 solution = solver.mergeIntervals(args);
                 break;
+            case "Minimum Path Sum in a Triangle":
+                solution = solver.minTrianglePath(args);
+                break;
             case "Sanitize Parentheses in Expression":
                 solution = solver.sanitizeParens(args);
+                break;
+            case "Shortest Path in a Grid":
+                solution = solver.shortestPath(args);
                 break;
             case "Spiralize Matrix":
                 solution = solver.spiralizeMatrix(args);
