@@ -2,7 +2,7 @@
  * File containing server-related utility functions.
  */
 
-import SINGULARITY from "CONFIG.js"
+import { SINGULARITY } from "/CONFIG.js"
 
 /**
  * Generates a list of all valid server hostnames.

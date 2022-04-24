@@ -7,7 +7,7 @@ import * as solver from "/contract-scripts/script-solvers.js"
  * @param {ns} ns Netscript object
  */
 export async function main(ns) {
-    const servers = getAllServers();
+    const servers = getAllServers(ns);
     var contracts = [];
 
     servers.forEach((hostname) => {
@@ -21,12 +21,8 @@ export async function main(ns) {
     });
 
     contracts.forEach((contract) => {
-        if (blacklist.includes(contract)) {
-            return;
-        }
-
         const type = ns.codingcontract.getContractType(contract.filename, contract.hostname);
-        const args = ns.codingcontract.getContractData(contract.filename, contract.hostname);
+        const args = ns.codingcontract.getData(contract.filename, contract.hostname);
         var solution = null;
         switch (type) {
             case "Algorithmic Stock Trader I":
@@ -76,9 +72,7 @@ export async function main(ns) {
                 break;
             case "Unique Paths in a Grid II":
                 solution = solver.uniquePaths2(args, 0, 0);
-                break;
-            default:
-                ns.tprint("No solution implemented for contract type " + type);
+                break;                
         }
 
         if (solution != null) {
@@ -88,8 +82,10 @@ export async function main(ns) {
             }
             else {
                 ns.tprint("Failed contract of type: " + type);
-                blacklist.push(contract);
             }
+        }
+        else {
+            ns.tprint("No solution implemented for contract type " + type);
         }
     });
 }
