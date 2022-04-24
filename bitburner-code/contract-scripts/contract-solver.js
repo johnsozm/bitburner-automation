@@ -7,11 +7,12 @@ import * as solver from "/contract-scripts/script-solvers.js";
  * @param {ns} ns Netscript object
  */
 export async function main(ns) {
-    const servers = getAllServers(ns);
     var blacklist = [];
 
     while (true) {
+        const servers = getAllServers(ns);
         var contracts = [];
+        
         servers.forEach((hostname) => {
             var serverContracts = ns.ls(hostname, ".cct");
             serverContracts.forEach((contractFile) => {
