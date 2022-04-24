@@ -81,7 +81,7 @@ export async function rootServer(ns, hostname) {
         if (SINGULARITY) {
             await ns.singularity.installBackdoor(hostname);
         }
-        return true;
+        return ns.hasRootAccess(hostname);
     }
     
     return false;
