@@ -484,3 +484,52 @@ export function unique_paths_2(grid, x, y) {
 	}
 	return paths;
 }
+
+/**
+ * Solver function for Find All Valid Math Expressions
+ * 
+ * @param {string} digits 
+ * @param {number} target 
+ * @returns An array of all expressions using the given numbersthat evaluate to target.
+ */
+export function valid_math_expressions(digits, target) {
+	//Helper function to generate all possible expressions
+	function generate_all_expressions(string) {
+		if (string.length == 1) {
+			var ret = new Set();
+			ret.add(string);
+			return ret;
+		}
+	
+		var expressions = new Set();
+	
+		if (string[0] != '0') {
+			expressions.add(string);
+		}
+	
+		for (let i = 1; i < string.length; i++) {
+			if (string[0] == '0' && i > 1) {
+				break;
+			}
+			var extensions = generate_all_expressions(string.substring(i));
+			extensions.forEach((ext) => {
+				expressions.add(string.substring(0, i) + "+" + ext);
+				expressions.add(string.substring(0, i) + "-" + ext);
+				expressions.add(string.substring(0, i) + "*" + ext);
+			});
+		}
+	
+		return expressions;
+	}
+
+	var expressions = generate_all_expressions(digits);
+	var valid_expressions = [];
+
+	expressions.forEach((expr) => {
+		if (eval(expr) == target) {
+			valid_expressions.push(expr);
+		}
+	});
+
+	return valid_expressions;
+}

@@ -15,7 +15,7 @@ describe("Test Array Jump solver function", () => {
 describe("Test Total Ways to Sum II solver function", () => {
     it("Should return 0 if there is no way to reach the given sum", () => {
         assert.equal(solver.count_sums([3, 4, 6], 0, 0, 1), 0);
-    })
+    });
     it("Should correctly count the ways to sum", () => {
         assert.equal(solver.count_sums([1, 3, 5, 7], 0, 0, 12), 12);
         assert.equal(solver.count_sums([1, 2, 4], 0, 0, 8), 9);
@@ -71,7 +71,7 @@ describe("Test Sanitize Parentheses in Expression solver function", () => {
     });
     it("Should keep non-paren characters in place", () => {
         assert.deepEqual(solver.sanitize_parens("(a)())()"), ["(a())()", "(a)()()"]);
-    })
+    });
 });
 
 describe("Test Spiralize Matrix solver function", () => {
@@ -139,5 +139,12 @@ describe("Test Unique Paths in a Grid II solver function", () => {
     });
     it("Should count all the possible paths for a passable grid", () => {
         assert.equal(solver.unique_paths_2([[0, 0, 0, 1], [0, 1, 0, 1], [0, 0, 0, 0], [1, 1, 0, 0]], 0, 0), 4);
+    });
+});
+
+describe("Test Find All Valid Math Expressions solver function", () => {
+    it("Should find all expressions that evaluate to the target", () => {
+        assert.deepEqual(solver.valid_math_expressions("123", 6), ["1+2+3", "1*2*3"]);
+        assert.deepEqual(solver.valid_math_expressions("105", 5), ["1*0+5", "10-5"]);
     });
 });
