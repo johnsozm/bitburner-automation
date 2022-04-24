@@ -2,7 +2,7 @@
  * File containing server-related utility functions.
  */
 
-import SINGULARITY from "../CONFIG.js"
+import SINGULARITY from "CONFIG.js"
 
 /**
  * Generates a list of all valid server hostnames.
@@ -45,7 +45,7 @@ export function getAllServers(ns) {
  * @param {string} hostname Hostname of the target server
  * @returns True if the server was hacked, false otherwise
  */
-export function rootServer(ns, hostname) {
+export async function rootServer(ns, hostname) {
     if (!ns.serverExists(hostname) || ns.getHackingLevel() < ns.getServerRequiredHackingLevel(hostname)) {
         return false;
     }

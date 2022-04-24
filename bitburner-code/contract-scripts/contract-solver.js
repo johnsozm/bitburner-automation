@@ -1,5 +1,5 @@
 import { getAllServers } from "/utils/server-functions.js";
-import * as solver from "./script-solvers.js"
+import * as solver from "/contract-scripts/script-solvers.js"
 
 /**
  * Continuously locates and solves all coding contracts.
