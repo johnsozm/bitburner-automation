@@ -47,7 +47,7 @@ export async function main(ns) {
                     solution = solver.arrayJumpShortestPath(args, 0, 0);
                     break;
                 case "Find All Valid Math Expressions":
-                    solution = solver.validMathExpressions(args[1], args[0]);
+                    solution = solver.validMathExpressions(args[0], args[1]);
                     break;
                 case "Find Largest Prime Factor":
                     solution = solver.largestFactor(args[0]);
@@ -99,7 +99,7 @@ export async function main(ns) {
                     ns.tprint("Contract completed! Reward: " + reward);
                 }
                 else {
-                    ns.tprint("Failed contract of type: " + type);
+                    ns.tprint("Failed contract of type: " + type + "on server " + contract.hostname);
                     blacklist.push(contract.filename);
                 }
             }
