@@ -603,27 +603,87 @@ export function shortestPath(grid) {
 			if (unvisited[k] == null) {
 				continue;
 			}
-			const this_i = unvisited[k][0];
-			const this_j = unvisited[k][1];
+			const thisI = unvisited[k][0];
+			const thisJ = unvisited[k][1];
 
-			if (this_i == i - 1 && this_j == j && distance[this_i][this_j] > minDistance + 1) {
-				distance[this_i][this_j] = minDistance + 1;
-				path[this_i][this_j] = path[i][j] + "U";
+			if (thisI == i - 1 && thisJ == j && distance[thisI][thisJ] > minDistance + 1) {
+				distance[thisI][thisJ] = minDistance + 1;
+				path[thisI][thisJ] = path[i][j] + "U";
 			}
-			if (this_i == i + 1 && this_j == j && distance[this_i][this_j] > minDistance + 1) {
-				distance[this_i][this_j] = minDistance + 1;
-				path[this_i][this_j] = path[i][j] + "D";
+			if (thisI == i + 1 && thisJ == j && distance[thisI][thisJ] > minDistance + 1) {
+				distance[thisI][thisJ] = minDistance + 1;
+				path[thisI][thisJ] = path[i][j] + "D";
 			}
-			if (this_i == i && this_j == j - 1 && distance[this_i][this_j] > minDistance + 1) {
-				distance[this_i][this_j] = minDistance + 1;
-				path[this_i][this_j] = path[i][j] + "L";
+			if (thisI == i && thisJ == j - 1 && distance[thisI][thisJ] > minDistance + 1) {
+				distance[thisI][thisJ] = minDistance + 1;
+				path[thisI][thisJ] = path[i][j] + "L";
 			}
-			if (this_i == i && this_j == j + 1 && distance[this_i][this_j] > minDistance + 1) {
-				distance[this_i][this_j] = minDistance + 1;
-				path[this_i][this_j] = path[i][j] + "R";
+			if (thisI == i && thisJ == j + 1 && distance[thisI][thisJ] > minDistance + 1) {
+				distance[thisI][thisJ] = minDistance + 1;
+				path[thisI][thisJ] = path[i][j] + "R";
 			}
 		}
 	}
 
 	return path[grid.length - 1][grid[0].length - 1];
+}
+
+/**
+ * Solver for the HammingCodes: Integer to encoded Binary contract.
+ * 
+ * @param {number} n The number to be encoded.
+ * @returns A string containing the extended, even-parity encoding of n.
+ */
+export function hammingEncode(n) {
+	const n_bits = Array.from(n.toString(2)).map((x) => parseInt(x));
+
+	var bit_string = [0]; //Initialize with overall parity bit
+	var next_power = 1;
+	var bits_index = 0;
+	var parity_bits = [];
+	var parity = [];
+	
+	//Generate bit string with parity bits set to 0
+	while (bits_index < n_bits.length) {
+		if (bit_string.length == next_power) {
+			bit_string.push(0);
+			parity.push(0);
+			parity_bits.push(next_power);
+			next_power <<= 1;
+		}
+		else {
+			bit_string.push(n_bits[bits_index]);
+			bits_index++;
+		}
+	}
+
+	//Calculate parities
+	for (let i = 0; i < bit_string.length; i++) {
+		for (let j = 0; j < parity_bits.length; j++) {
+			if ((i & parity_bits[j]) != 0) {
+				parity[j] ^= bit_string[i];
+			}
+		}
+	}
+
+	//Fix any odd parity
+	for (let i = 0; i < parity.length; i++) {
+		if (parity[i] == 1) {
+			bit_string[parity_bits[i]] = 1;
+		}
+	}
+
+	//Calculate overall parity and fix if needed
+	var overall_parity = 0;
+	bit_string.forEach((x) => {overall_parity ^= x});
+
+	if (overall_parity == 1) {
+		bit_string[0] = 1;
+	}
+
+	//Spit out bit string
+	var binary_string = "";
+	bit_string.forEach((x) => {binary_string += x});
+
+	return binary_string;
 }

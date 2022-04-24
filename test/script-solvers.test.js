@@ -164,3 +164,10 @@ describe("Test Shortest Path in a Grid solver", () => {
         assert.equal(solver.shortestPath([[0,1,0,0,0],[0,0,0,1,0]]), "DRRURRD");
     });
 });
+
+describe("Test HammingCodes: Integer to encoded Binary solver", () => {
+    it("Should generate the correct Hamming code", () => {
+        assert.equal(solver.hammingEncode(8), "11110000");
+        assert.equal(solver.hammingEncode(21), "1001101011");
+    });
+});
