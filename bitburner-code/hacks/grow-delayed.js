@@ -5,8 +5,8 @@
  * @param {ns} ns Netscript object
  */
  export async function main(ns) {
-    if (ns.args.length != 2) {
-        ns.tprint("Usage: grow-delayed.js [target] [delay (ms)]");
+    if (ns.args.length != 3) {
+        ns.tprint("Usage: grow-delayed.js [target] [delay (ms)] [randomizer value]");
         return;
     }
 
