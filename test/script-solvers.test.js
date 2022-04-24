@@ -125,3 +125,10 @@ describe("Test Total Ways to Sum solver function", () => {
         assert.equal(solver.count_sum_partitions(150), 40853235312);
     });
 });
+
+describe("Test Unique Paths in a Grid solver function", () => {
+    it("Should correctly compute the number of distinct paths", () => {
+        assert.equal(solver.unique_paths_1(4, 6), 56);
+        assert.equal(solver.unique_paths_1(16, 12), 7726160)
+    });
+});

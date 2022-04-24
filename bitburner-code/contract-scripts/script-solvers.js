@@ -440,3 +440,23 @@ export function stock_trader_3(prices) {
 
 	return counts[total][total] - 1;
 }
+
+/**
+ * Solver function for Unique Paths in a Grid.
+ * 
+ * @param {number} rows The number of rows in the grid
+ * @param {number} columns The number of columns in the grid
+ * @returns The number of distinct paths from the top-left to the bottom-right cell
+ */
+export function unique_paths_1(rows, columns) {
+	//Compute ((rows-1) + (columns-1)) choose (rows-1)
+	var paths = 1;
+	for (let i = rows + columns - 2; i > rows - 1; i--) {
+		paths *= i;
+	}
+	for (let i = 2; i <= columns - 1; i++) {
+		paths /= i;
+	}
+
+	return paths;
+}
