@@ -148,3 +148,10 @@ describe("Test Find All Valid Math Expressions solver function", () => {
         assert.deepEqual(solver.validMathExpressions("105", 5), ["1*0+5", "10-5"]);
     });
 });
+
+describe("Test Minimum Path Sum in a Triangle solver function", () => {
+    it("Should find the smallest path sum possible in a triangle", () => {
+        assert.equal(solver.minTrianglePath([[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]), 11);
+        assert.equal(solver.minTrianglePath([[6], [4, 3], [3, 3, 1], [9, 8, 7, 7], [3, 5, 2, 7, 4], [9, 9, 7, 1, 9, 4], [5, 9, 9, 4, 2, 1, 5], [5, 9, 4 ,6, 3, 8, 2, 7]]), 25);
+    });
+});

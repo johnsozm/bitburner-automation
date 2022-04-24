@@ -533,3 +533,24 @@ export function validMathExpressions(digits, target) {
 
 	return validExpressions;
 }
+
+/**
+ * Solver function for Minimum Path Sum in a Triangle.
+ * 
+ * @param {number[][]} triangle The triangle to be analyzed
+ * @returns The minimum path sum for the triangle
+ */
+export function minTrianglePath(triangle) {
+	for (let row = triangle.length - 2; row >= 0; row--) {
+		for (let column = 0; column < triangle[row].length; column++) {
+			if (triangle[row + 1][column] < triangle[row + 1][column + 1]) {
+				triangle[row][column] += triangle[row + 1][column];
+			}
+			else {
+				triangle[row][column] += triangle[row + 1][column + 1];
+			}
+		}
+	}
+
+	return triangle[0][0];
+}
