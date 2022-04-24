@@ -1,5 +1,5 @@
 import { getAllServers } from "/utils/server-functions.js";
-import * as solver from "/contract-scripts/script-solvers.js"
+import * as solver from "/contract-scripts/script-solvers.js";
 
 /**
  * Continuously locates and solves all coding contracts.
@@ -8,20 +8,20 @@ import * as solver from "/contract-scripts/script-solvers.js"
  */
 export async function main(ns) {
     const servers = getAllServers(ns);
-    var contracts = [];
     var blacklist = [];
 
-    servers.forEach((hostname) => {
-        var serverContracts = ns.ls(hostname, ".cct");
-        serverContracts.forEach((contractFile) => {
-            contracts.push({
-                hostname: hostname,
-                filename: contractFile
+    while (true) {
+        var contracts = [];
+        servers.forEach((hostname) => {
+            var serverContracts = ns.ls(hostname, ".cct");
+            serverContracts.forEach((contractFile) => {
+                contracts.push({
+                    hostname: hostname,
+                    filename: contractFile
+                });
             });
         });
-    });
 
-    while (true) {
         contracts.forEach((contract) => {
             if (blacklist.includes(contract.filename)) {
                 return;
