@@ -1,27 +1,27 @@
 /**
  * Recursive solver function for Array Jump or Array Jump II contracts.
- * Should be initiated as array_jump_shortest_path(array, 0, 0).
+ * Should be initiated as arrayJumpShortestPath(array, 0, 0).
  * 
  * @param {number[]} array The array to be traversed
  * @param {number} current The current location within the array
  * @param {number} steps The number of steps taken so far
  * @returns The least number of steps required to reach the end of the array, or 0 if it is impossible
  */
-export function array_jump_shortest_path(array, current, steps) {
+export function arrayJumpShortestPath(array, current, steps) {
 	if (current == array.length - 1) {
 		return steps;
 	}
 	else {
-		let min_test = Infinity;
+		let minTest = Infinity;
 		for (let n = 1; n <= array[current] && current + n < array.length; n++) {
-			let test = array_jump_shortest_path(array, current + n, steps + 1);
-			if (test != 0 && test < min_test) {
-				min_test = test;
+			let test = arrayJumpShortestPath(array, current + n, steps + 1);
+			if (test != 0 && test < minTest) {
+				minTest = test;
 			}
 		}
 		
-		if (min_test < Infinity) {
-			return min_test;
+		if (minTest < Infinity) {
+			return minTest;
 		}
 		else {
 			return 0;
@@ -32,7 +32,7 @@ export function array_jump_shortest_path(array, current, steps) {
 /**
  * Recursive solver function for Total Ways to Sum II contracts.
  * Determines the number of ways to sum the given numbers to the target value.
- * Should be initiated as count_sums(digits, 0, 0, target).
+ * Should be initiated as countSums(digits, 0, 0, target).
  * 
  * @param {string} digits The digits which may be used to make the sum
  * @param {number} index The current index
@@ -40,7 +40,7 @@ export function array_jump_shortest_path(array, current, steps) {
  * @param {number} target The target sum
  * @returns The total number of ways to sum the given digits to the target
  */
-export function count_sums(digits, index, sum, target) {
+export function countSums(digits, index, sum, target) {
 	if (sum > target) {
 		return 0;
 	}
@@ -57,21 +57,21 @@ export function count_sums(digits, index, sum, target) {
 	}
 
 	var count = 0;
-	count += count_sums(digits, index, sum + digits[index], target);
-	count += count_sums(digits, index + 1, sum, target);
+	count += countSums(digits, index, sum + digits[index], target);
+	count += countSums(digits, index + 1, sum, target);
 	return count;
 }
 
 /**
  * Recursive solver function for Generate IP Addresses contracts.
- * Should be called as find_all_ips("", digits, 4).
+ * Should be called as findAllIPs("", digits, 4).
  * 
  * @param {string} ip The IP accumulator string
  * @param {string} digits The remaining digits to add to the IP
  * @param {number} remaining The number of IP digit groups remaining
  * @returns All IP addresses that can be generated with the given digits
  */
-export function find_all_ips(ip, digits, remaining) {
+export function findAllIPs(ip, digits, remaining) {
 	//Short-circuit if there's too much remaining string to be a valid IP
 	if (digits.length > remaining * 3) {
 		return [];
@@ -95,7 +95,7 @@ export function find_all_ips(ip, digits, remaining) {
 		if (value > 255 || (value != 0 && digits[0] == '0')) {
 			break;
 		}
-		results = results.concat(find_all_ips(ip + digits.substring(0, offset) + ".", digits.substring(offset), remaining - 1))
+		results = results.concat(findAllIPs(ip + digits.substring(0, offset) + ".", digits.substring(offset), remaining - 1))
 	}
 	return results;
 }
@@ -106,7 +106,7 @@ export function find_all_ips(ip, digits, remaining) {
  * @param {number} num The number to be factored
  * @returns The largest prime factor of the given number, or 1 if the number has no prime factors.
  */
-export function largest_factor(num) {
+export function largestFactor(num) {
 	if (num < 2 || Math.floor(num) != num) {
 		return 1;
 	}
@@ -147,20 +147,20 @@ export function largest_factor(num) {
  * @param {number[]} array The array to be analyzed
  * @returns The largest sum of any contiguous subarray
  */
-export function max_subarray_sum(array) {
-	var max_sum = -Infinity;
+export function maxSubarraySum(array) {
+	var maxSum = -Infinity;
 
 	for (let min = 0; min < array.length; min++) {
 		var sum = 0;
 		for (let max = min; max < array.length; max++) {
 			sum += array[max];
-			if (sum > max_sum) {
-				max_sum = sum;
+			if (sum > maxSum) {
+				maxSum = sum;
 			}
 		}
 	}
 
-	return max_sum;
+	return maxSum;
 }
 
 /**
@@ -169,7 +169,7 @@ export function max_subarray_sum(array) {
  * @param {number[][]} intervals The intervals to merge
  * @returns The non-overlapping set of intervals which covers all passed intervals.
  */
-export function merge_intervals(intervals) {
+export function mergeIntervals(intervals) {
 	intervals.sort(([a, _b], [c, _d]) => a-c);
 	
 	var merged = [];
@@ -199,9 +199,9 @@ export function merge_intervals(intervals) {
  * @param {string} string The original expression as a string
  * @returns A list of the longest possible substrings with matching parens
  */
-export function sanitize_parens(string) {
+export function sanitizeParens(string) {
 	//Helper function to check if a string has matching parens
-	function valid_parens(string) {
+	function validParens(string) {
 		var counter = 0;
 		for (let i = 0; i < string.length; i++) {
 			if (string[i] == '(') {
@@ -217,22 +217,22 @@ export function sanitize_parens(string) {
 		return counter == 0;
 	}
 
-	var test_set = new Set();
-	test_set.add(string);
+	var testSet = new Set();
+	testSet.add(string);
 
-	while (test_set.size > 0) {
-		var next_set = new Set();
-		test_set.forEach((val) => {
+	while (testSet.size > 0) {
+		var nextSet = new Set();
+		testSet.forEach((val) => {
 			for (let i = 0; i < val.length; i++) {
 				if (val[i] == '(' || val[i] == ')') {
-					next_set.add(val.substring(0, i) + val.substring(i+1));
+					nextSet.add(val.substring(0, i) + val.substring(i+1));
 				}
 			}
 		});
 
 		var valid = [];
-		next_set.forEach((val) => {
-			if (valid_parens(val)) {
+		nextSet.forEach((val) => {
+			if (validParens(val)) {
 				valid.push(val);
 			}
 		});
@@ -240,7 +240,7 @@ export function sanitize_parens(string) {
 		if (valid.length != 0) {
 			return valid;
 		}
-		test_set = next_set;
+		testSet = nextSet;
 	}
 
 	return [""];
@@ -252,57 +252,57 @@ export function sanitize_parens(string) {
  * @param {number[][]} matrix The matrix to spiralize
  * @returns An array containing the spiralized matrix
  */
-export function spiralize_matrix(matrix) {
-	var min_x = 0;
-	var min_y = 0;
-	var max_x = matrix[0].length - 1;
-	var max_y = matrix.length - 1;
+export function spiralizeMatrix(matrix) {
+	var minX = 0;
+	var minY = 0;
+	var maxX = matrix[0].length - 1;
+	var maxY = matrix.length - 1;
 	var x = 0;
 	var y = 0;
     var spiralized = [];
 
-	while(min_x <= max_x && min_y <= max_y) {
-        if (min_x > max_x) {
+	while(minX <= maxX && minY <= maxY) {
+        if (minX > maxX) {
             break;
         }
-        while (x <= max_x) {  
+        while (x <= maxX) {  
             spiralized.push(matrix[y][x]);
             x++;
         }
-        min_y++;
+        minY++;
         y++;
         x--;
 
-        if (min_y > max_y) {
+        if (minY > maxY) {
             break;
         }
-        while (y <= max_y) {
+        while (y <= maxY) {
             spiralized.push(matrix[y][x]);
             y++;
         }
-        max_x--;
+        maxX--;
         y--;
         x--;
 
-        if (min_x > max_x) {
+        if (minX > maxX) {
             break;
         }
-        while (x >= min_x) {
+        while (x >= minX) {
             spiralized.push(matrix[y][x]);
             x--;
         }
-        max_y--;
+        maxY--;
         x++;
         y--;
 
-        if (min_y > max_y) {
+        if (minY > maxY) {
             break;
         }
-        while (y >= min_y) {
+        while (y >= minY) {
             spiralized.push(matrix[y][x]);
             y--;
         }
-        min_x++;
+        minX++;
         x++;
         y++;
     }
@@ -316,19 +316,19 @@ export function spiralize_matrix(matrix) {
  * @param {number[]} prices The prices to analyze
  * @returns The maximum profit that can be made with a single trade.
  */
-export function stock_trader_1(prices) {
-	var max_profit = 0;
+export function stockTrader1(prices) {
+	var maxProfit = 0;
 
 	for (let i = 0; i < prices.length - 1; i++) {
 		for (let j = i + 1; j < prices.length; j++) {
 			var profit = prices[j] - prices[i];
-			if (profit > max_profit) {
-				max_profit = profit;
+			if (profit > maxProfit) {
+				maxProfit = profit;
 			}
 		}
 	}
 
-	return max_profit;
+	return maxProfit;
 }
 
 /**
@@ -337,24 +337,24 @@ export function stock_trader_1(prices) {
  * @param {number[]} prices The prices to analyze
  * @returns The maximum profit that can be made using any number of trades
  */
-export function stock_trader_2(prices) {
-	var max_profit = [];
+export function stockTrader2(prices) {
+	var maxProfit = [];
 	for (let i = 0; i < prices.length; i++) {
-		max_profit.push(0);
+		maxProfit.push(0);
 	}
-	max_profit.push(0); //Extra entry for going past sale at last step
+	maxProfit.push(0); //Extra entry for going past sale at last step
 
 	for (let i = prices.length - 2; i >= 0; i--) {
-		max_profit[i] = max_profit[i+1];
+		maxProfit[i] = maxProfit[i+1];
 		for (let j = i + 1; j < prices.length; j++) {
-			var test = prices[j] - prices[i] + max_profit[j+1];
-			if (test > max_profit[i]) {
-				max_profit[i] = test;
+			var test = prices[j] - prices[i] + maxProfit[j+1];
+			if (test > maxProfit[i]) {
+				maxProfit[i] = test;
 			}
 		}
 	}
 
-	return max_profit[0];
+	return maxProfit[0];
 }
 
 /**
@@ -363,7 +363,7 @@ export function stock_trader_2(prices) {
  * @param {number[]} prices The prices to analyze
  * @returns The maximum profit that can be made using at most 2 trades.
  */
-export function stock_trader_3(prices) {
+export function stockTrader3(prices) {
 	var gains = [];
 	for (let i = 0; i < prices.length - 1; i++) {
 		var thisGains = [];
@@ -393,7 +393,7 @@ export function stock_trader_3(prices) {
 		}
 	}
 
-	const singleStep = stock_trader_1(prices);
+	const singleStep = stockTrader1(prices);
 	if (singleStep > maxProfit) {
 		maxProfit = singleStep;
 	}
@@ -407,7 +407,7 @@ export function stock_trader_3(prices) {
  * @param {number} total The number to partition
  * @returns The number of distinct partitions, excluding n = n
  */
- export function count_sum_partitions(total) {
+ export function countSumPartitions(total) {
 	var counts = [];
 
 	//Initialize counts - count[i][j] is ways of writing i using largest term j
@@ -448,7 +448,7 @@ export function stock_trader_3(prices) {
  * @param {number} columns The number of columns in the grid
  * @returns The number of distinct paths from the top-left to the bottom-right cell
  */
-export function unique_paths_1(rows, columns) {
+export function uniquePaths1(rows, columns) {
 	//Compute ((rows-1) + (columns-1)) choose (rows-1)
 	var paths = 1;
 	for (let i = rows + columns - 2; i > rows - 1; i--) {
@@ -463,24 +463,24 @@ export function unique_paths_1(rows, columns) {
 
 /**
  * Recursive solver function for Unique Paths in a Grid II.
- * Should be called as unique_paths_2(grid, 0, 0).
+ * Should be called as uniquePaths2(grid, 0, 0).
  * 
  * @param {number[][]} grid The grid to be traversed (0 = passable, 1 = impassable)
  * @param {number} x The current x coordinate
  * @param {number} y The current y coordinate
  * @returns The number of unique paths from (x, y) to the bottom right
  */
-export function unique_paths_2(grid, x, y) {
+export function uniquePaths2(grid, x, y) {
 	if (y == grid.length - 1 && x == grid[0].length - 1) {
 		return 1;
 	}
 
 	var paths = 0;
 	if (y < grid.length - 1 && grid[y+1][x] == 0) {
-		paths += unique_paths_2(grid, x, y+1);
+		paths += uniquePaths2(grid, x, y+1);
 	}
 	if (x < grid[0].length - 1 && grid[y][x+1] == 0) {
-		paths += unique_paths_2(grid, x+1, y);
+		paths += uniquePaths2(grid, x+1, y);
 	}
 	return paths;
 }
@@ -492,9 +492,9 @@ export function unique_paths_2(grid, x, y) {
  * @param {number} target 
  * @returns An array of all expressions using the given numbersthat evaluate to target.
  */
-export function valid_math_expressions(digits, target) {
+export function validMathExpressions(digits, target) {
 	//Helper function to generate all possible expressions
-	function generate_all_expressions(string) {
+	function generateAllExpressions(string) {
 		if (string.length == 1) {
 			var ret = new Set();
 			ret.add(string);
@@ -511,7 +511,7 @@ export function valid_math_expressions(digits, target) {
 			if (string[0] == '0' && i > 1) {
 				break;
 			}
-			var extensions = generate_all_expressions(string.substring(i));
+			var extensions = generateAllExpressions(string.substring(i));
 			extensions.forEach((ext) => {
 				expressions.add(string.substring(0, i) + "+" + ext);
 				expressions.add(string.substring(0, i) + "-" + ext);
@@ -522,14 +522,14 @@ export function valid_math_expressions(digits, target) {
 		return expressions;
 	}
 
-	var expressions = generate_all_expressions(digits);
-	var valid_expressions = [];
+	var expressions = generateAllExpressions(digits);
+	var validExpressions = [];
 
 	expressions.forEach((expr) => {
 		if (eval(expr) == target) {
-			valid_expressions.push(expr);
+			validExpressions.push(expr);
 		}
 	});
 
-	return valid_expressions;
+	return validExpressions;
 }
