@@ -19,19 +19,28 @@ export async function main(ns) {
         grow: ns.getScriptRam("/hacks/grow-delayed.js", "home"),
         weaken: ns.getScriptRam("/hacks/weaken-delayed.js", "home")
     };
-    var servers = getAllServers(ns).map(function(hostname) {
-        return {
-            name: hostname,
-            hackLevel: ns.getServerRequiredHackingLevel(hostname),
-            hackPorts: ns.getServerNumPortsRequired(hostname),
-            minSecurity: ns.getServerMinSecurityLevel(hostname),
-            maxMoney: ns.getServerMaxMoney(hostname),
-            rooted: false,
-            threads: null,
-            delays: null,
-            batchCost: 0,
-            running: []
-        };
+    const allServers = getAllServers(ns);
+    const purchasedServers = ns.getPurchasedServers();
+    var servers = [];
+    
+    allServers.forEach((hostname) => {
+        if (hostname == "home" || purchasedServers.includes(hostname)) {
+            return;
+        }
+        else {
+            servers.push({
+                name: hostname,
+                hackLevel: ns.getServerRequiredHackingLevel(hostname),
+                hackPorts: ns.getServerNumPortsRequired(hostname),
+                minSecurity: ns.getServerMinSecurityLevel(hostname),
+                maxMoney: ns.getServerMaxMoney(hostname),
+                rooted: false,
+                threads: null,
+                delays: null,
+                batchCost: 0,
+                runningPids: []
+            });
+        }
     });
 
     while (true) {
@@ -48,8 +57,8 @@ export async function main(ns) {
             if (!servers[i].rooted) {
                 continue;
             }
-            servers[i].threads = calculateBatchThreads(ns, servers[i].name);
-            servers[i].delays = calculateBatchDelays(ns, servers[i].name, servers[i].minSecurity, servers[i].maxMoney);
+            servers[i].threads = calculateBatchThreads(ns, servers[i].name, servers[i].minSecurity, servers[i].maxMoney);
+            servers[i].delays = calculateBatchDelays(ns, servers[i].name);
             servers[i].runningPids = updateRunningPIDs(ns, servers[i].runningPids);
             servers[i].batchCost = (servers[i].threads.hack * costs.hack) + (servers[i].threads.grow * costs.grow)
                                     + ((servers[i].threads.weaken_1 + servers[i].threads.weaken_2) * costs.weaken);
@@ -58,18 +67,18 @@ export async function main(ns) {
 
         //Get available and total space on all purchased servers
         var totalSpace = 0;
-        var freeSpace = ns.getPurchasedServers.map(function(hostname) {
-            totalSpace += getServerMaxRam(hostname);
+        var freeSpace = ns.getPurchasedServers().map(function(hostname) {
+            totalSpace += ns.getServerMaxRam(hostname);
             return {
                 name: hostname,
-                free: ns.getServerMaxRam(hostname) - getServerUsedRam(hostname)
+                free: ns.getServerMaxRam(hostname) - ns.getServerUsedRam(hostname)
             }
         });
 
         //Update batch count & check total usage against total memory available
         var totalBatchCost = 0;
         servers.forEach((server) => {
-            if (server.rooted) {
+            if (server.rooted && server.maxMoney > 0) {
                 totalBatchCost += server.batchCost;
             }
         });
@@ -77,7 +86,7 @@ export async function main(ns) {
 
         if (numBatches == 0) {
             ns.tprint("Not enough RAM to run a batch.");
-            ns.tprint(totalSpace + " GiB total available RAM, need " + totalBatchCost + "GiB.");
+            ns.tprint(totalSpace + " GiB total available RAM, need " + totalBatchCost + " GiB.");
             return;
         }
 
@@ -139,7 +148,7 @@ function calculateBatchThreads(ns, hostname, minSecurity, maxMoney) {
     var hackThreads = Math.floor(ns.hackAnalyzeThreads(hostname, 0.5 * maxMoney));
     const growThreads = Math.ceil(ns.growthAnalyze(hostname, 2.0, 1));
     const hackSecurity = ns.hackAnalyzeSecurity(hackThreads, hostname);
-    const growSecurity = ns.growthAnalyzeSecurity(growThreads, hostname);
+    const growSecurity = ns.growthAnalyzeSecurity(growThreads, hostname, 1);
     const weaken1Threads = Math.ceil(hackSecurity / 0.05) + 1;
     const weaken2Threads = Math.ceil(growSecurity / 0.05) + 1;
 
