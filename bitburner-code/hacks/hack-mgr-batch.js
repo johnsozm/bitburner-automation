@@ -89,7 +89,7 @@ export async function main(ns) {
 
             var allPids = [];
             for (let j = 0; j < numBatches; j++) {
-                thisPids = executeBatch(ns, servers[i].threads, servers[i].delays, j * INTER_BATCH_DELAY);
+                thisPids = executeBatch(ns, servers[i].name, servers[i].threads, servers[i].delays, j * INTER_BATCH_DELAY, freeSpace, costs);
 
                 if (thisPids.length == 0) {
                     ns.tprint("ERROR: No batches initiated. Exiting.");
@@ -178,12 +178,76 @@ function calculateBatchDelays(ns, hostname) {
  * Executes a batch with the specified parameters.
  * 
  * @param {ns} ns Netscript object
- * @param {number, number, number, number} threads The batch thread parameters
- * @param {number, number, number, number} delays The batch delay parameters
+ * @param {string} target The target server
+ * @param {{number, number, number, number}} threads The batch thread parameters
+ * @param {{number, number, number, number}} delays The batch delay parameters
  * @param {number} batchDelay The overall batch delay
+ * @param {{string, number}[]} freeSpace The current free space available, which will be updated
+ * @param {{number, number, number}} costs The costs of hack, weaken, and grow threads
  * @returns The executed PID's
  */
-function executeBatch(ns, threads, delays, batchDelay) {
-    //TODO: Implement
-    return [];
+function executeBatch(ns, target, threads, delays, batchDelay, freeSpace, costs) {
+    const minCost = Math.min(costs.hack, costs.weaken, costs.grow);
+    var remaining = Object.assign({}, threads);
+    var pids = [];
+
+    for (let i = 0; i < freeSpace.length; i++) {
+        if (freeSpace[i].free < minCost) {
+            continue;
+        }
+
+        if (remaining.hack > 0) {
+            const hackThreads = Math.min(Math.floor(freeSpace[i].free / costs.hack), threads.hack);
+            const pid = ns.exec("/hacks/hack-delayed.js", freeSpace[i].name, hackThreads, target, delays.hack + batchDelay, Math.random());
+            if (pid == 0) {
+                ns.tprint("ERROR: Could not execute hack of " + target + " from " + freeSpace[i].name);
+            }
+            else {
+                pids.push(pid);
+                freeSpace[i] -= hackThreads * costs.hack;
+            }
+        }
+        else if (remaining.weaken1 > 0) {
+            const weakenThreads = Math.min(Math.floor(freeSpace[i].free / costs.weaken), threads.weaken1);
+            const pid = ns.exec("/hacks/weaken-delayed.js", freeSpace[i].name, weakenThreads, target, delays.weaken1 + batchDelay, Math.random());
+            if (pid == 0) {
+                ns.tprint("ERROR: Could not execute weaken of " + target + " from " + freeSpace[i].name);
+            }
+            else {
+                pids.push(pid);
+                freeSpace[i] -= weakenThreads * costs.weaken;
+            }
+        }
+        else if (remaining.grow > 0) {
+            const growThreads = Math.min(Math.floor(freeSpace[i].free / costs.grow), threads.grow);
+            const pid = ns.exec("/hacks/grow-delayed.js", freeSpace[i].name, growThreads, target, delays.grow + batchDelay, Math.random());
+            if (pid == 0) {
+                ns.tprint("ERROR: Could not execute grow of " + target + " from " + freeSpace[i].name);
+            }
+            else {
+                pids.push(pid);
+                freeSpace[i] -= growThreads * costs.grow;
+            }
+        }
+        else if (remaining.weaken2 > 0) {
+            const weakenThreads = Math.min(Math.floor(freeSpace[i].free / costs.weaken), threads.weaken2);
+            const pid = ns.exec("/hacks/weaken-delayed.js", freeSpace[i].name, weakenThreads, target, delays.weaken2 + batchDelay, Math.random());
+            if (pid == 0) {
+                ns.tprint("ERROR: Could not execute weaken of " + target + " from " + freeSpace[i].name);
+            }
+            else {
+                pids.push(pid);
+                freeSpace[i] -= weakenThreads * costs.hack;
+            }
+        }
+        else {
+            break;
+        }
+
+        if (freeSpace[i].free > minCost) {
+            i--;
+        }
+    }
+
+    return pids;
 }
