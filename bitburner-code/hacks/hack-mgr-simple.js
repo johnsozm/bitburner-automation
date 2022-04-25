@@ -11,30 +11,25 @@ export async function main(ns) {
         return;
     }
 
-    const servers = getAllServers(ns);
     const hackScript = ns.args[0];
     const threads = parseInt(ns.args[1]);
     var anyNodesLeft = true;
+    var servers = new Set();
+    getAllServers(ns).forEach((hostname) => {
+        servers.add(hostname);
+    });
 
-    while (anyNodesLeft) {
-        anyNodesLeft = false;
-        const hackingLevel = ns.getHackingLevel();
-
-        for (let i = 0; i < servers.length; i++) {
-            if (servers[i] == null) {
-                continue;
-            }
-
-            anyNodesLeft = true;
-            if (rootServer(ns, servers[i])) {
-                if (ns.getServerMaxMoney(servers[i]) > 0 && hackingLevel >= ns.getServerRequiredHackingLevel(servers[i])) {
-                    if (ns.run(hackScript, threads, servers[i]) == 0) {
-                        ns.tprint("Ran out of RAM while trying to hack " + servers[i] + " on " + ns.getHostname());
+    while (servers.size > 0) {
+        servers.forEach((server) => {
+            if (rootServer(ns, server)) {
+                if (ns.getServerMaxMoney(server) > 0 ) {
+                    if (ns.run(hackScript, threads, server) == 0) {
+                        ns.tprint("Ran out of RAM while trying to hack " + server + " on " + ns.getHostname());
                     }
                 }
-                servers[i] = null;
+                servers.delete(server);
             }
-        }
+        });
 
         await ns.sleep(10000);
     }
