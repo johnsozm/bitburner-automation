@@ -43,7 +43,7 @@ export function getAllServers(ns) {
  * @param {string} hostname Hostname of the target server
  * @returns True if the server was hacked, false otherwise
  */
-export async function rootServer(ns, hostname) {
+export function rootServer(ns, hostname) {
     if (!ns.serverExists(hostname) || ns.getHackingLevel() < ns.getServerRequiredHackingLevel(hostname)) {
         return false;
     }
