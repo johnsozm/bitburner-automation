@@ -192,7 +192,7 @@ function executeBatch(ns, target, threads, delays, batchDelay, freeSpace, costs)
     var pids = [];
 
     for (let i = 0; i < freeSpace.length; i++) {
-        if (freeSpace[i].free < minCost) {
+        if (freeSpace[i].free < minCost || !ns.serverExists(target)) {
             continue;
         }
 
