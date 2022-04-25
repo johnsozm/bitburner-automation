@@ -2,8 +2,6 @@
  * File containing server-related utility functions.
  */
 
-import { SINGULARITY } from "/CONFIG.js"
-
 /**
  * Generates a list of all valid server hostnames.
  * 
@@ -78,9 +76,6 @@ export async function rootServer(ns, hostname) {
 
     if (openPorts >= ns.getServerNumPortsRequired(hostname)) {
         ns.nuke(hostname);
-        if (SINGULARITY) {
-            await ns.singularity.installBackdoor(hostname);
-        }
         return ns.hasRootAccess(hostname);
     }
     
