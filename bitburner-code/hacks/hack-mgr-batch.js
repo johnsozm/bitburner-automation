@@ -202,7 +202,7 @@ function calculateBatchDelays(ns, hostname) {
  * @returns The executed PID's
  */
 function executeBatch(ns, target, threads, delays, batchDelay, freeSpace, costs) {
-    const minCost = Math.min(costs.hack, costs.weaken, costs.grow);
+    const minCost = Math.max(costs.hack, costs.weaken, costs.grow);
     var remaining = Object.assign({}, threads);
     var pids = [];
 
