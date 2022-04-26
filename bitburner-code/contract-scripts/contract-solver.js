@@ -42,7 +42,7 @@ export async function main(ns) {
                     solution = solver.stockTrader3(args);
                     break;
                 case "Algorithmic Stock Trader IV":
-                    solution = solver.stockTrader(args[1], args[0]);
+                    solution = solver.stockTrader4(args[1], args[0]);
                     break;
                 case "Array Jumping Game":
                     solution = solver.arrayJumpShortestPath(args, 0, 0) > 0 ? 1 : 0;
