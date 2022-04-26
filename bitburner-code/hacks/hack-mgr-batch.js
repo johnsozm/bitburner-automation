@@ -163,7 +163,7 @@ function calculateBatchThreads(ns, hostname, minSecurity, maxMoney) {
 
     return {
         hack: shouldHack ? hackThreads : 0,
-        weaken1: weaken1Threads,
+        weaken1: weaken1Threads == Infinity ? 1000 : weaken1Threads,
         grow: growThreads,
         weaken2: weaken2Threads
     };
