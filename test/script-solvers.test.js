@@ -117,6 +117,15 @@ describe("Test Algorithmic Stock Trader III solver function", () => {
     });
 });
 
+describe("Test Algorithmic Stock Trader IV solver function", () => {
+    it("Should return 0 if no profit can be made", () => {
+        assert.equal(solver.stockTrader4([12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 3), 0);
+    });
+    it("Should return the maximum profit possible if any can be made", () => {
+        assert.equal(solver.stockTrader4([117, 132, 59, 62, 132, 131, 112, 110, 62, 93], 3), (132-117) + (132-59) + (93-62));
+    })
+});
+
 describe("Test Total Ways to Sum solver function", () => {
     it("Should correctly compute the partition function", () => {
         assert.equal(solver.countSumPartitions(12), 76);

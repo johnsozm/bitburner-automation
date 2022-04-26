@@ -41,6 +41,9 @@ export async function main(ns) {
                 case "Algorithmic Stock Trader III":
                     solution = solver.stockTrader3(args);
                     break;
+                case "Algorithmic Stock Trader IV":
+                    solution = solver.stockTrader(args[1], args[0]);
+                    break;
                 case "Array Jumping Game":
                     solution = solver.arrayJumpShortestPath(args, 0, 0) > 0 ? 1 : 0;
                     break;

@@ -364,41 +364,30 @@ export function stockTrader2(prices) {
  * @returns The maximum profit that can be made using at most 2 trades.
  */
 export function stockTrader3(prices) {
-	var gains = [];
-	for (let i = 0; i < prices.length - 1; i++) {
-		var thisGains = [];
-		for (let j = 0; j <= prices.length; j++) {
-			if (j <= i) {
-				thisGains.push(0);
-			}
-			else {
-				thisGains.push(prices[j] - prices[i]);
-			}
-		}
-		gains.push(thisGains);
-	}
+	return stockTrader4(prices, 2);
+}
 
-	var maxProfit = -Infinity;
-
-	for (let i = 0; i < prices.length - 3; i++) {
-		for (let j = i + 1; j < prices.length - 2; j++) {
-			for (let k = j + 1; k < prices.length - 1; k++) {
-				for (let l = k + 1; l < prices.length; l++) {
-					const profit = gains[i][j] + gains[k][l];
-					if (profit > maxProfit) {
-						maxProfit = profit;
-					}
-				}
+/**
+ * Solver function for Algorithmic Stock Trader IV contracts.
+ * 
+ * @param {number[]} prices The prices to analyze
+ * @param {number} maxTrades The maximum number of trades that may be executed
+ * @returns The maximum profit that can be made using at most the specified number of trades.
+ */
+export function stockTrader4(prices, maxTrades) {
+	//Dynamic programming approach - calculate max for n trades as max of 1 trades from here + max of n-1 trades from other end
+	var maxProfit = Array.from(Array(maxTrades + 1), _ => Array(prices.length + 1).fill(0));
+	
+	for (let trades = 1; trades <= maxTrades; trades++) {
+		for (let i = prices.length - 2; i >= 0; i--) {
+			for (let j = i + 1; j < prices.length; j++) {
+				maxProfit[trades][i] = Math.max(maxProfit[trades][i], maxProfit[trades-1 ][j+1] + prices[j] - prices[i]);
 			}
+			maxProfit[trades][i] = Math.max(maxProfit[trades][i], maxProfit[trades][i+1]);
 		}
 	}
 
-	const singleStep = stockTrader1(prices);
-	if (singleStep > maxProfit) {
-		maxProfit = singleStep;
-	}
-
-	return maxProfit;
+	return maxProfit[maxTrades][0];
 }
 
 /**
