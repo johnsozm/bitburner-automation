@@ -109,8 +109,7 @@ export async function main(ns) {
                 });
                 
                 if (thisPids.length == 0 || !anyStarted) {
-                    ns.tprint("ERROR: No batches initiated for " + servers[i].name + ". Exiting.");
-                    return;
+                    await(ns.sleep(LOOP_DELAY));
                 }
             }
             servers[i].runningPids = allPids;
