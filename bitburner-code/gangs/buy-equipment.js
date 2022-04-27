@@ -24,14 +24,15 @@ export async function main(ns) {
         const members = ns.gang.getMemberNames().map(function(memberName) {
             return {
                 name: memberName,
-                equipment: ns.gang.getMemberInformation(memberName).upgrades
+                equipment: ns.gang.getMemberInformation(memberName).upgrades,
+                augmentations: ns.gang.getMemberInformation(memberName).augmentations
             };
         });
         
         equipment.forEach((equip) => {
             var need = [];
             members.forEach((member) => {
-                if (!member.equipment.includes(equip.name)) {
+                if (!member.equipment.includes(equip.name) && !member.augmentations.includes(equip.name)) {
                     need.push(member.name);
                 }
             });
