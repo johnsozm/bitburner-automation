@@ -33,12 +33,12 @@ export async function main(ns) {
                         && (stats.dex >= targetLevel) && (stats.str >= targetLevel);
         const chaDone = stats.cha >= targetLevel;
 
-        const hackAscend = ascensionResults == null ? false : ascensionResults.hack >= 1.5;
-        const combatAscend = ascensionResults == null ? false : ascensionResults.agi >= 1.5
-                            && ascensionResults.def >= 1.5
-                            && ascensionResults.dex >= 1.5
-                            && ascensionResults.str >= 1.5;
-        const chaAscend = ascensionResults == null ? false : ascensionResults.cha >= 1.5;
+        const hackAscend = ascensionResults == null ? false : (ascensionResults.hack >= 1.5 || ascensionResults.hack * stats.hack_asc_mult >= stats.hack_asc_mult + 2);
+        const combatAscend = ascensionResults == null ? false : (ascensionResults.agi >= 1.5 || ascensionResults.agi * stats.agi_asc_mult >= stats.agi_asc_mult + 2)
+                            && (ascensionResults.def >= 1.5 || ascensionResults.def * stats.def_asc_mult >= stats.def_asc_mult + 2)
+                            && (ascensionResults.dex >= 1.5 || ascensionResults.dex * stats.dex_asc_mult >= stats.dex_asc_mult + 2)
+                            && (ascensionResults.str >= 1.5 || ascensionResults.str * stats.str_asc_mult >= stats.str_asc_mult + 2);
+        const chaAscend = ascensionResults == null ? false : (ascensionResults.cha >= 1.5 || ascensionResults.cha * stats.cha_asc_mult >= stats.cha_asc_mult + 2);
 
         if (hackDone && combatDone && chaDone) {
             ns.gang.setMemberTask(member, "Territory Warfare");
