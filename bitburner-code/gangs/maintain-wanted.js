@@ -20,13 +20,13 @@ export async function main(ns) {
     while (true) {
         if (shrinkingWanted) {
             ns.gang.setMemberTask(ns.args[0], ns.args[1]);
-            if (ns.gang.getGangInformation().wantedPenalty == 0) {
+            if (ns.gang.getGangInformation().wantedPenalty > 0.9999) {
                 shrinkingWanted = false;
             }
         }
         else {
             ns.gang.setMemberTask(ns.args[0], ns.args[2]);
-            if (ns.gang.getGangInformation().wantedPenalty >= 1.0/12.0) {
+            if (ns.gang.getGangInformation().wantedPenalty <= 11.0/12.0) {
                 shrinkingWanted = true;
             }
         }
