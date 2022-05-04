@@ -4,3 +4,4 @@
 
 export const SINGULARITY = false;
 export const GANGS = true;
+export const CORPORATIONS = true;
