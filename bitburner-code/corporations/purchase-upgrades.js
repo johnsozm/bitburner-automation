@@ -22,6 +22,13 @@ export async function main(ns) {
             }
         });
 
+        const divisions = ns.corporation.getCorporation().divisions;
+        divisions.forEach((division) => {
+            while (ns.corporation.getHireAdVertCost(division.name) < maxCost) {
+                ns.corporation.hireAdVert(division.name);
+            }
+        });
+
         await ns.sleep(10000);
     }
 }
