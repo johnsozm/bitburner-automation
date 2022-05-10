@@ -33,7 +33,7 @@ export async function main(ns) {
     while (true) {
         const money = ns.corporation.getCorporation().funds;
         
-        if (money > lastCost * 2) {
+        if (money > lastCost * 10) {
             const division = ns.corporation.getDivision(divisionName);
             const products = division.products.map(function (product) {
                 return ns.corporation.getProduct(divisionName, product);
