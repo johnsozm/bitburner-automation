@@ -32,13 +32,15 @@ export async function main(ns) {
 
     while (true) {
         const money = ns.corporation.getCorporation().funds;
+
+        const division = ns.corporation.getDivision(divisionName);
+        const products = division.products.map(function (product) {
+            return ns.corporation.getProduct(divisionName, product);
+        });
+
+        
         
         if (money > lastCost * 10) {
-            const division = ns.corporation.getDivision(divisionName);
-            const products = division.products.map(function (product) {
-                return ns.corporation.getProduct(divisionName, product);
-            });
-
             var maxProducts = 3;
             if (ns.corporation.hasResearched(divisionName, "uPgrade: Capacity.I")) {
                 maxProducts++;
@@ -53,8 +55,6 @@ export async function main(ns) {
                 if (product.developmentProgress < 100) {
                     developing = true;
                 }
-                ns.corporation.setProductMarketTA2(divisionName, product.name, true);
-                ns.corporation.sellProduct(divisionName, "Aevum", product.name, "MAX", "MP", true);
             });
 
             if (!developing) {
@@ -78,6 +78,13 @@ export async function main(ns) {
                 ns.corporation.makeProduct(divisionName, "Aevum", Math.random().toString().substring(2, 6), money / 2, money / 2);
             }
         }
+
+        products.forEach((product) => {
+            if (product.developmentProgress == 100) {
+                ns.corporation.setProductMarketTA2(divisionName, product.name, true);
+                ns.corporation.sellProduct(divisionName, "Aevum", product.name, "MAX", "MP", true);
+            }
+        });
 
         await ns.sleep(10000);
     }
